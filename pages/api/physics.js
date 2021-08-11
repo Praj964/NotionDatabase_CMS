@@ -8,6 +8,12 @@ export default async function handler(req, res) {
     const databaseId = process.env.NOTION_DATABASE_ID;
     const response = await notion.databases.query({
       database_id: databaseId,
+
+      /*
+        In this case we are filtering the tags with Physics tag. To not add any filters, you can just 
+        remove the below filter part.
+      */
+
       filter: {
         or: [
         {
@@ -20,6 +26,13 @@ export default async function handler(req, res) {
       },
     });
 
+    /*
+      The below loop helps in extracting the data from the individual pages 
+      returned by the Notion API. Note that every column of data entered is 
+      a separate notion page so you need to use the following loop to extract
+      the data from individual pages.
+    */
+   
     var i = 0;
     var pageResponse = "";
     while(i< response.results.length) {

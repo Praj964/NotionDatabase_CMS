@@ -1,159 +1,67 @@
+import useSWR from 'swr'
 import Link from 'next/link'
-import Footer from './components/Footer'
-import Image from 'next/image'
-import Head from 'next/head'
 
-export default function Home() {
+const fetcher = (url) => fetch(url).then((res) => res.json())
+
+export default function Index() {
+  const { data, error } = useSWR('/api/physics', fetcher)
+
+  if (error) return <div class="container items-center px-5 py-12 lg:px-20"><div class="w-full text-yellow-600 border rounded-lg shadow-xl "><div class="flex items-center justify-between px-6 py-4 mx-auto "><div class="flex"><svg xmlns="http://www.w3.org/2000/svg" class="mr-4 icon icon-tabler icon-tabler-alert-triangle" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><circle cx="12" cy="12" r="9"></circle><line x1="12" y1="8" x2="12.01" y2="8"></line><polyline points="11 12 12 12 12 16 13 16"></polyline></svg><p class="text-sm font-semibold tracking-wide uppercase "><strong>Error:</strong>Failed to load. Please reload or try again later.</p></div><button class="p-1 transition-colors duration-200 transform rounded-md hover:bg-opacity-25 hover:bg-blueGray-600 focus:outline-none" type="button" aria-label="Close" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><circle cx="12" cy="12" r="9"></circle><path d="M10 10l4 4m0 -4l-4 4"></path></svg></button></div></div></div>
+  if (!data) return <div className="min-h-screen flex justify-center items-center bg-black"><div className="loader bg-white p-5 rounded-full flex space-x-3"><div className="w-5 h-5 bg-gray-800 rounded-full animate-bounce"></div><div className="w-5 h-5 bg-gray-800 rounded-full animate-bounce"></div><div className="w-5 h-5 bg-gray-800 rounded-full animate-bounce"></div></div></div>
+
+  const dataOutput = data.output;
+
+  console.log(data);
+  console.log(data.output.length)
+  console.log(data.output)
+  console.log(dataOutput)
+
   return (
-    <div className="bg-black">
-      <Head>
-        <title>Learn from the top universities for Free</title>
-        <meta property="og:url" content="https://www.internetisawesome.xyz/"></meta>
-        <meta property="og:type" content="website"></meta>
-        <meta property="og:title" content="Learn from the top universities for Free"></meta>
-        <meta property="og:description" content="Get to learn from the top universities in the World for free"></meta>
-        <meta property="og:image" content="/https://www.internetisawesome.xyz/twitter_banner_min.png"></meta>
+    <div>
+            <header>
+                <div className="px-5 sm:px-10 lg:px-20 bg-gradient-to-r from-pink-400 via-red-400 to-red-600">
+                    <div className="flex justify-center"> 
+                        <h1 className="mb-12 py-20 text-2xl font-semibold leading-none tracking-tighter text-white sm:text-4xl">
+                                    <a className="font-bold">Physics</a> 
+                                    <br></br>
+                                    <br></br>
+                                    <br></br>
+                                    This page is in sync with {' '}
+                                    <Link href="https://www.notion.so/prajwxl/Courses-from-Top-Universities-a255ca0fb0004a85b769f7cb078d1694">
+                                      <a className="underline hover:text-gray-150">this Notion Page</a>
+                                    </Link>
+                        </h1>
+                    </div>
+                </div>
+            </header>
 
-        <meta name="twitter:card" content="summary_large_image"></meta>
-        <meta property="twitter:domain" content="internetisawesome.xyz"></meta>
-        <meta property="twitter:url" content="https://www.internetisawesome.xyz/"></meta>
-        <meta name="twitter:title" content="Learn from the top universities for Free"></meta>
-        <meta name="twitter:description" content="Get to learn from the top universities in the World for free"></meta>
-        <meta name="twitter:image" content="/https://www.internetisawesome.xyz/twitter_banner_min.png"></meta>
-      </Head>
-
-      <div className="pt-8 sm:mx-20">
-        <hero className="grid ">
-          <h1 className="text-4xl sm:text-4xl my-4 mb-6 sm:mb-8 text-center font-bold leading-none tracking-tighter text-white">
-            Learn from the top universities <br></br> in the world for free!
-          </h1> 
-        </hero>
-
-        <div className="fixed m-4 bottom-0 right-0">
-          <div className="flex flex-row gap-2">
-            <div className="">
-                <Link href="https://api.whatsapp.com/send?text=Curious%20about%20everything%20around%3F%20%0A%0ALearn%20from%20the%20top%20universities%20in%20the%20world%20for%20free!%0A%0ACheckout%20%3A%20internetisawesome.xyz">
-                    <a target="_blank">
-                        <Image src="/whatsapp.png" height={48} width={48}></Image>    
-                    </a>
-                </Link>
-            </div>
-            <div className="">
-                <Link href="https://twitter.com/intent/tweet?text=Curious%20about%20everything%20around%3F%20%0A%0ALearn%20from%20the%20top%20universities%20in%20the%20world%20for%20free!%0A%0ACheckout%20%3A%20internetisawesome.xyz">
-                    <a target="_blank">
-                        <Image src="/twitter.png" height={48} width={48}></Image>    
-                    </a>
-                </Link>
-            </div>
-          </div>
+            <body className="bg-black">
+                <div className="grid px-5 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 sm:px-20 sm:gap-4">
+                  {dataOutput.map((dataOutput, index) => (
+                    <div key={index}>
+                      <div className="container items-center  text-blueGray-500">
+                        <div className="p-2 my-2 sm:my-6 bg-white border rounded-lg shadow-xl">
+                          <div className="p-6">
+                                <h4 className="mb-2 text-2xl font-semibold leading-none tracking-tighter text-black lg:text-3xl title-font "> 
+                                  {dataOutput.nameOfTheCourse}
+                                </h4>
+                                <h2 className="mb-2 text-xs font-semibold tracking-widest text-black uppercase title-font"> 
+                                  {dataOutput.collegeName}
+                                </h2>
+                                <Link href={dataOutput.url}>
+                                    <a target="_blank">
+                                        <button className="w-full px-8 py-2 my-2 text-base font-medium text-white transition duration-500 ease-in-out transform border-black rounded-md bg-black focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2 hover:bg-blueGray-900 "> 
+                                            View Course 
+                                        </button>
+                                    </a>    
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                  ))}
+                </div>
+            </body>
         </div>
-
-        <section  className="flex flex-col sm:flex-row gap-4 pb-8 mx-4">
-          <cards>
-            <div className="container">
-                    <div className="p-2 px-2 py-10 sm:px-5 sm:py-40 rounded-lg shadow-xl bg-gradient-to-r from-green-400 to-blue-500">
-                      <div className="flex-grow p-6 py-2 rounded-lg">
-                        <p className="mb-2 text-2xl font-bold leading-none tracking-tighter text-white sm:text-5xl"> 
-                          Jack of all trades?
-                        </p>
-                        <p className="mb-3 text-xl font-semibold leading-relaxed text-gray-100	"> 
-                          All the courses from top universities like Harvard, Stanford, MIT, etc for Free!
-                        </p>
-                        <Link href="/subject/all">
-                                    <a>
-                                        <button className="px-8 py-2 my-2 text-base font-medium text-white transition duration-500 ease-in-out transform border-black rounded-md bg-black focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2 hover:bg-blueGray-900 "> 
-                                            Explore →
-                                        </button>
-                                    </a>    
-                                </Link>
-                      </div>
-                    </div>
-            </div>
-          </cards>
-          <grid className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                    <div className="p-2 px-5 py-10 bg-gradient-to-tl from-green-400 to-yellow-400 rounded-lg shadow-xl">
-                      <div className="flex-grow p-6 py-2 rounded-lg">
-                        <p className="mb-2 text-2xl font-bold leading-none tracking-tighter text-white sm:text-3xl"> 
-                          Numbers say more than words?
-                        </p>
-                        <p className="mb-3 text-xl font-semibold leading-relaxed text-gray-100	"> 
-                          Courses on Mathematics from MIT & Harvard.
-                        </p>
-                        <Link href="/subject/maths">
-                                    <a>
-                                        <button className=" px-8 py-2 my-2 text-base font-medium text-white transition duration-500 ease-in-out transform border-black rounded-md bg-black focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2 hover:bg-blueGray-900 "> 
-                                            Explore →
-                                        </button>
-                                    </a>    
-                                </Link>
-                      </div>
-                    </div>
-              </div>
-
-              <div>
-                    <div className="p-2 px-5 py-10 bg-gradient-to-bl from-pink-500 to-blue-600 rounded-lg shadow-xl">
-                      <div className="flex-grow p-6 py-2 rounded-lg">
-                        <p className="mb-2 text-2xl font-bold leading-none tracking-tighter text-white sm:text-3xl"> 
-                          Fan of Feynman?
-                        </p>
-                        <p className="mb-3 text-xl font-semibold leading-relaxed text-gray-100	"> 
-                          Courses on Physics, Biology, Chemistry from MIT, Yale & Stanford.
-                        </p>
-                        <Link href="/subject/physics">
-                                    <a>
-                                        <button className=" px-8 py-2 my-2 text-base font-medium text-white transition duration-500 ease-in-out transform border-black rounded-md bg-black focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2 hover:bg-blueGray-900 "> 
-                                            Explore →
-                                        </button>
-                                    </a>    
-                                </Link>
-                      </div>
-                    </div>
-              </div>
-
-              <div>
-                <div className="p-2 px-5 py-10 bg-gradient-to-r from-red-400 to-yellow-500 rounded-lg shadow-xl">
-                      <div className="flex-grow p-6 py-2 rounded-lg">
-                        <p className="mb-2 text-2xl font-bold leading-none tracking-tighter text-white sm:text-3xl"> 
-                          Think like Bill?
-                        </p>
-                        <p className="mb-3 text-xl font-semibold leading-relaxed text-gray-100	"> 
-                          Courses on Computers and Machine Learning from MIT & Harvard.
-                        </p>
-                        <Link href="/subject/computers">
-                                    <a>
-                                        <button className=" px-8 py-2 my-2 text-base font-medium text-white transition duration-500 ease-in-out transform border-black rounded-md bg-black focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2 hover:bg-blueGray-900 "> 
-                                            Explore →
-                                        </button>
-                                    </a>    
-                                </Link>
-                      </div>
-                    </div>
-              </div>
-
-              <div>
-                <div className="p-2 px-5 py-10 bg-gradient-to-b from-pink-400 via-red-400 to-red-600 rounded-lg shadow-xl">
-                      <div className="flex-grow p-6 py-2 rounded-lg">
-                        <p className="mb-2 text-2xl font-bold leading-none tracking-tighter text-white sm:text-3xl"> 
-                          Quoting Naval often?
-                        </p>
-                        <p className="mb-3 text-xl font-semibold leading-relaxed text-gray-100	"> 
-                          Courses on Psychology and Philosophy from Yale and University of Toronto.
-                        </p>
-                        <Link href="/subject/philosophy">
-                                    <a>
-                                        <button className=" px-8 py-2 my-2 text-base font-medium text-white transition duration-500 ease-in-out transform border-black rounded-md bg-black focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2 hover:bg-blueGray-900 "> 
-                                            Explore →
-                                        </button>
-                                    </a>    
-                                </Link>
-                      </div>
-                    </div>
-              </div>
-          </grid>
-        </section>
-      </div>
-      <Footer/>
-    </div>
   )
 }
