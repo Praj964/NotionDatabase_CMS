@@ -22,4 +22,4 @@ NOTION_DATABASE_ID =
 Database ID is basically the number at the end of the notion link of the page. Remeber that you have to provide the Database ID therefore you'll need to expand the database and copy and enter the ID here.
 
 ### Currently being used in :
-- Internet Is Awesome (internetisawesome.xyz)
+- Internet Is Awesome (http://internetisawesome.xyz)
